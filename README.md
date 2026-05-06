@@ -23,8 +23,6 @@ page.
 
 ## Uninstalling server
 
-Not yet converted to steamdeck!
-
 To uninstall the server, run the following command. This script will remove
 server binary and systemd service, but it will preserve the configuration file.
 
