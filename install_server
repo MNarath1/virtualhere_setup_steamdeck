@@ -24,8 +24,9 @@ fi
 wget https://www.virtualhere.com/sites/default/files/usbserver/$FILENAME
 chmod +x $FILENAME
 mv $FILENAME /usr/local/sbin
-mkdir -p /usr/local/etc/virtualhere
+mkdir -p /home/.steamos/virtualhere
 if [ -d "/etc/systemd/system" ]; then
+  steamos-readonly disable
   cat << EOF > /etc/systemd/system/virtualhere.service
 [Unit]
 Description=VirtualHere Server
@@ -33,14 +34,24 @@ After=network.target
 
 [Service]
 Type=forking
-ExecStart=/usr/local/sbin/$FILENAME -b -c /usr/local/etc/virtualhere/config.ini
+ExecStart=/usr/local/sbin/$FILENAME -b -c /home/.steamos/virtualhere/config.ini
 
 [Install]
 WantedBy=multi-user.target
 EOF
+
+cat << EOF > /etc/atomic-update.conf.d/virtualhere_ignore.conf
+## Files dropped by the virtualhere installer to allow them to survive a steam deck update
+
+/usr/local/sbin/$FILENAME
+/etc/systemd/system/virtualhere.service
+
+EOF
+
   systemctl daemon-reload
   systemctl enable virtualhere.service
   systemctl start virtualhere.service
+  steamos-readonly enable
 else
   echo "Error, only systemd is supported"
 fi
