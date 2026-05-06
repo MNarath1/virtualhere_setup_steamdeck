@@ -1,7 +1,8 @@
 # VirtualHere server install and uninstall script
 
 VirtualHere server install script for `systemd` based systems.
-This Script was specifically modified to work on the steamdeck.
+This Script was specifically modified to allow the installation of Virtualhere on the Steamdeck as a Service
+and to stay persistant on the device even between updates.
 
 ## Installing default version
 
