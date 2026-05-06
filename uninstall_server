@@ -4,13 +4,16 @@ if [ "$(id -u)" -ne 0 ]; then
   exit 1
 fi
 UNIT="/etc/systemd/system/virtualhere.service"
+ATOMIC="/etc/atomic-update.conf.d/virtualhere_ignore.conf"
 if [ -f "$UNIT" ]; then
+  steamos-readonly disable
   systemctl stop virtualhere.service
   systemctl disable virtualhere.service
   FILENAME="$(awk -F'[ =]' '/ExecStart=/ {print $2}' $UNIT)"
   CONFIG="$(awk -F'[ =]' '/ExecStart=/ {print $5}' $UNIT)"
-  rm "$FILENAME" "$UNIT"
+  rm "$FILENAME" "$UNIT" "$ATOMIC"
   systemctl daemon-reload
+  steamos-readonly enable
   echo "Configuration file $CONFIG"
   echo "was not removed. Remove it manualy if you wish."
 else
