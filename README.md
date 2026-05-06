@@ -1,7 +1,7 @@
 # VirtualHere server install and uninstall script
 
-VirtualHere server install script for `systemd` based systems (e.g Raspberry
-Pi and most modern Linux Distributions).
+VirtualHere server install script for `systemd` based systems.
+This Script was specifically modified to work on the steamdeck.
 
 ## Installing default version
 
@@ -21,6 +21,8 @@ page.
     curl https://raw.githubusercontent.com/virtualhere/script/main/install_server | sudo sh -s - vhusbdarmpi4
 
 ## Uninstalling server
+
+Not yet converted to steamdeck!
 
 To uninstall the server, run the following command. This script will remove
 server binary and systemd service, but it will preserve the configuration file.
